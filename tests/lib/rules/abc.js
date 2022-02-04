@@ -6,21 +6,22 @@ const rule = require('../../../lib/rules/abc');
 // https://stackoverflow.com/questions/42706584/eslint-error-parsing-error-the-keyword-const-is-reserved
 const ruleTester = new RuleTester({
   parserOptions: {
-    ecmaVersion: 2017,
+    ecmaVersion: 2020,
+    sourceType:"module"
   },
 });
 
 ruleTester.run('abc', rule, {
   valid: [
     {
-      code: 'const abc = 1;',
+      code: "import {x} from 'x'",
     }
   ],
   invalid: [
     {
-      code: 'const xyz = 2;',
+      code: "import {x} from 'enzyme'",
       errors: [
-        { message: 'xyz' },
+        { message: 'Enyzyme is deprecated' },
       ]
     }
   ],
