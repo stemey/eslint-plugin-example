@@ -1,7 +1,7 @@
 // https://eslint.org/docs/developer-guide/nodejs-api#ruletester
 
 const { RuleTester } = require('eslint');
-const rule = require('../../../lib/rules/abc');
+const rule = require('../../../lib/rules/enzyme-forbidden');
 
 // https://stackoverflow.com/questions/42706584/eslint-error-parsing-error-the-keyword-const-is-reserved
 const ruleTester = new RuleTester({
@@ -11,7 +11,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run('abc', rule, {
+ruleTester.run('enzyme-forbidden', rule, {
   valid: [
     {
       code: "import {x} from 'x'",
