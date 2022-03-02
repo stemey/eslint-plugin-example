@@ -17,14 +17,42 @@ const ruleTester = new RuleTester({
 ruleTester.run("container-nesting", rule, {
   valid: [
     {
-      code: "const x = <test><test>Hallo</test>xxx</test>",
+      code: "const x = <Container><Container>Hallo</Container><x></x></Container>",
     },
+    {
+      code: "const x = <Container><Container>Hallo</Container>{something}</Container>",
+    },
+    {
+      code: "const x = <Container><Container>Hallo</Container>some weird content</Container>",
+    }
   ],
   invalid: [
     {
-      code: "<test><test>Hallo</test></test>",
+      code: `const x = <Container>
+                <Container>Hallo</Container>
+                
+              </Container>`,
       errors: [
-        { message: "Don't nest a container as only child in a container" },
+        { messageId: "nestedContainer" },
+      ],
+    },
+    {
+      code: `const x = <Container>
+                         {condition && (<Container>
+                            <Container>Hallo</Container>  
+                          </Container>)}
+              </Container>`,
+      errors: [
+        { messageId: "nestedContainer" },
+      ],
+    },{
+      code: `const x = <Layout>
+                         {condition && (<Container>
+                            <Container>Hallo</Container>  
+                          </Container>)}
+              </Layout>`,
+      errors: [
+        { messageId: "nestedContainer" },
       ],
     },
   ],
